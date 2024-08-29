@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "443430946629",
+    "project_id": "shopingo-78ae1",
+    "storage_bucket": "shopingo-78ae1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:443430946629:android:91f81580be79b02c1de02c",
+        "android_client_info": {
+          "package_name": "com.shopingo_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "443430946629-ja8n7ii10icrc1q59bm3g6d7mjuksfqh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shopingo_app",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "443430946629-5gv8njpfcjr5e1suqhcnsnc86dccddjq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBephq-y8CdNuXSgQL8E353X2TWJVI6btI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "443430946629-5gv8njpfcjr5e1suqhcnsnc86dccddjq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
