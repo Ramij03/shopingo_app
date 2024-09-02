@@ -7,6 +7,7 @@ import ProfilePage from '../(tabs)/ProfilePage';
 import SearchPage from '../(tabs)/SearchPage';
 import FavoritePage from '../(tabs)/FavoritePage';
 import CartPage from './CartPage';
+import colors from '../../constants/colors';
 
 const Tab = createBottomTabNavigator();
 
@@ -16,7 +17,7 @@ const BottomTabs: React.FC = () => {
     screenOptions={{
       tabBarStyle: {
         position: 'absolute',
-        backgroundColor: '#FFFFFF',
+        backgroundColor:colors.white,
         borderRadius: 15,
         height: 60,
         ...styles.shadow
@@ -31,10 +32,10 @@ const BottomTabs: React.FC = () => {
             style={{
               width:25,
               height:25,
-              tintColor: focused? '#e32f45': '#F9AB9E'
+              tintColor: focused? colors.primary: colors.pink
             }}
           />
-          <Text style={{color: focused? '#e32f45': '#F9AB9E', fontSize:12,marginBottom:12}}>Explore</Text>
+          <Text style={{color: focused? colors.primary: colors.pink, fontSize:12,marginBottom:12}}>Explore</Text>
         </View>
        ), 
       }} />
@@ -45,10 +46,10 @@ const BottomTabs: React.FC = () => {
             style={{
               width:25,
               height:25,
-              tintColor: focused? '#e32f45': '#F9AB9E'
+              tintColor: focused? colors.primary: colors.pink
             }}
           />
-          <Text style={{color: focused? '#e32f45': '#F9AB9E', fontSize:12,marginBottom:12}}>Search</Text>
+          <Text style={{color: focused? colors.primary: colors.pink, fontSize:12,marginBottom:12}}>Search</Text>
         </View>
        ), 
       }} />
@@ -59,7 +60,7 @@ const BottomTabs: React.FC = () => {
             style={{
               width:25,
               height:25,
-              tintColor: focused? '#FFFFFF': '#efefef',
+              tintColor: focused? colors.white: colors.darkwhite,
             }}
           />
         </View>
@@ -72,10 +73,10 @@ const BottomTabs: React.FC = () => {
             style={{
               width:25,
               height:25,
-              tintColor: focused? '#e32f45': '#F9AB9E'
+              tintColor: focused? colors.primary: colors.pink
             }}
           />
-          <Text style={{color: focused? '#e32f45': '#F9AB9E', fontSize:12,marginBottom:12}}>Favorite</Text>
+          <Text style={{color: focused? colors.primary: colors.pink, fontSize:12,marginBottom:12}}>Favorite</Text>
         </View>
        ), 
       }} />
@@ -86,10 +87,10 @@ const BottomTabs: React.FC = () => {
             style={{
               width:25,
               height:25,
-              tintColor: focused? '#e32f45': '#F9AB9E'
+              tintColor: focused? colors.primary: colors.pink
             }}
           />
-          <Text style={{color: focused? '#e32f45': '#F9AB9E', fontSize:12,marginBottom:12}}>Profile</Text>
+          <Text style={{color: focused? colors.primary: colors.pink, fontSize:12,marginBottom:12}}>Profile</Text>
         </View>
        ), 
       }} />
@@ -98,7 +99,7 @@ const BottomTabs: React.FC = () => {
 };
 const styles = StyleSheet.create({
   shadow:{
-    shadowColor:'#7F5DF0',
+    shadowColor:colors.purple,
     shadowOffset:{
       width:0,
       height:10,
@@ -112,13 +113,13 @@ const styles = StyleSheet.create({
     top: -15,
     left: '70%',
     transform: [{ translateX: -50 }],
-    backgroundColor: '#e32f45',
+    backgroundColor: colors.primary,
     borderRadius: 50,
     width: 60,
     height: 60,
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor:'#7F5DF0',
+    shadowColor:colors.purple,
     shadowOffset:{
       width:0,
       height:10,

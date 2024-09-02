@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
 import firebase from '@react-native-firebase/app';
 import functions from '@react-native-firebase/functions';
+import colors from '../../constants/colors';
 
 type ForgetPasswordScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Verify'>;
 interface SendVerificationEmailResult {
@@ -102,30 +103,30 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     justifyContent: 'center',
-    backgroundColor: '#FFF',
+    backgroundColor: colors.shadewhite,
   },
   containertext: {
     padding: 20,
     marginTop: -200,
     justifyContent: 'center',
-    backgroundColor: '#FFF',
+    backgroundColor: colors.shadewhite,
   },
   title: {
     fontSize: 30,
     fontWeight: 'bold',
     marginBottom: 10,
-    color: '#383B46',
+    color: colors.darkgrey,
     textAlign: 'center',
   },
   subtitle: {
     fontSize: 14,
-    color: '#888990',
+    color: colors.lightgrey,
     marginBottom: 30,
     textAlign: 'center',
   },
   input: {
     height: 50,
-    borderColor: '#ddd',
+    borderColor: colors.lightgrey,
     borderWidth: 1,
     borderRadius: 5,
     marginBottom: 20,
@@ -135,7 +136,7 @@ const styles = StyleSheet.create({
   button: {
     width: 343,
     height: 56,
-    backgroundColor: '#E0464E',
+    backgroundColor: colors.primary,
     paddingVertical: 15,
     borderRadius: 5,
     margin: 12,
@@ -143,7 +144,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   buttonText: {
-    color: '#FFF',
+    color: colors.white,
     fontSize: 18,
   },
   formContainer: {
@@ -153,18 +154,18 @@ const styles = StyleSheet.create({
     fontFamily: 'SourceSansPro-Semibold',
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#383B46',
+    color: colors.darkgrey,
     marginBottom: 10,
   },
   formInput: {
     height: 50,
     paddingHorizontal: 10,
     fontSize: 16,
-    color: '#6c757d',
-    backgroundColor: '#F7F8F9',
+    color: colors.grey,
+    backgroundColor: colors.darkwhite,
   },
   errorText: {
-    color: 'red',
+    color: colors.primary,
     marginBottom: 20,
   },
 });

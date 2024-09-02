@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
-import { SafeAreaView, StyleSheet, Dimensions,View, Text, TouchableOpacity, Image } from 'react-native';
+import { SafeAreaView, StyleSheet, Dimensions,View, Text, TouchableOpacity, Image,PixelRatio } from 'react-native';
 import { createNativeStackNavigator, NativeStackScreenProps } from '@react-navigation/native-stack';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
+import colors from '../../constants/colors';
 
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
@@ -120,82 +121,82 @@ async function onFacebookButtonPress() {
     </SafeAreaView>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: colors.white,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: screenWidth * 0.05, // Responsive padding (5% of screen width)
+    padding: 20, // Static padding
   },
   logoContainer: {
-    marginBottom: screenHeight * 0.1, // Responsive margin from bottom (10% of screen height)
+    marginBottom: 40, // Static margin from bottom
   },
   logoText: {
-    fontSize: screenWidth * 0.08, // Responsive font size (8% of screen width)
+    fontSize: PixelRatio.get() * 12, // Responsive font size (8% of screen width)
     fontWeight: 'bold',
   },
   description: {
-    fontSize: screenWidth * 0.04, // Responsive font size (4% of screen width)
+    fontSize: PixelRatio.get() * 5.5, // Responsive font size (4% of screen width)
     textAlign: 'center',
-    color: '#383B46',
-    marginBottom: screenHeight * 0.05, // Responsive margin from bottom (5% of screen height)
+    color: colors.darkgrey,
+    marginBottom: 30, // Static margin from bottom
   },
   signUpButton: {
-    width: screenWidth * 0.9, // Responsive width (90% of screen width)
-    height: screenHeight * 0.08, // Responsive height (8% of screen height)
-    backgroundColor: '#E0464E',
-    paddingVertical: screenHeight * 0.025, // Responsive padding vertical (2% of screen height)
-    paddingHorizontal: screenWidth * 0.1, // Responsive padding horizontal (10% of screen width)
-    borderRadius: screenWidth * 0.02, // Responsive border radius (2% of screen width)
-    marginBottom: screenHeight * 0.02, // Responsive margin from bottom (2% of screen height)
+    width: '90%', // Percentage-based width
+    height: 60, // Fixed height
+    backgroundColor: colors.primary,
+    paddingVertical: 15, // Static padding vertical
+    paddingHorizontal: 20, // Static padding horizontal
+    borderRadius: 10, // Static border radius
+    marginBottom: 20, // Static margin from bottom
   },
   signUpButtonText: {
-    color: 'white',
-    fontSize: screenWidth * 0.04, // Responsive font size (4% of screen width)
+    color: colors.white,
+    fontSize: PixelRatio.get() * 5, // Responsive font size (4% of screen width)
     fontWeight: 'bold',
     textAlign: 'center',
   },
   loginButton: {
     borderWidth: 1,
-    borderColor: '#E0464E',
-    width: screenWidth * 0.9, // Responsive width (90% of screen width)
-    height: screenHeight * 0.08, // Responsive height (8% of screen height)
-    paddingVertical: screenHeight * 0.025, // Responsive padding vertical (2% of screen height)
-    paddingHorizontal: screenWidth * 0.1, // Responsive padding horizontal (10% of screen width)
-    borderRadius: screenWidth * 0.02, // Responsive border radius (2% of screen width)
-    marginBottom: screenHeight * 0.02, // Responsive margin from bottom (2% of screen height)
+    borderColor: colors.primary,
+    width: '90%', // Percentage-based width
+    height: 60, // Fixed height
+    paddingVertical: 15, // Static padding vertical
+    paddingHorizontal: 20, // Static padding horizontal
+    borderRadius: 10, // Static border radius
+    marginBottom: 20, // Static margin from bottom
   },
   loginButtonText: {
-    color: '#E0464E',
-    fontSize: screenWidth * 0.04, // Responsive font size (4% of screen width)
+    color: colors.primary,
+    fontSize: PixelRatio.get() * 5, // Responsive font size (4% of screen width)
     fontWeight: 'bold',
     textAlign: 'center',
   },
   orText: {
-    color: '#AFB1B5',
-    fontSize: screenWidth * 0.04, // Responsive font size (4% of screen width)
-    marginBottom: screenHeight * 0.02, // Responsive margin from bottom (2% of screen height)
+    color: colors.grey,
+    fontSize: PixelRatio.get() * 5, // Responsive font size (4% of screen width)
+    marginBottom: 20, // Static margin from bottom
   },
   socialButtonsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: screenWidth * 0.5, // Responsive width (50% of screen width)
-    height: screenHeight * 0.07, // Responsive height (7% of screen height)
+    width: '50%', // Percentage-based width
+    height: 50, // Fixed height
   },
   circlecontainer: {
-    width: screenWidth * 0.15, // Responsive width (15% of screen width)
-    height: screenWidth * 0.15, // Responsive height (15% of screen width)
-    borderRadius: screenWidth * 0.075, // Responsive border radius (7.5% of screen width)
-    backgroundColor: '#F7F8F9',
+    width: '15%', // Percentage-based width
+    height: 10, // Responsive height (15% of screen width)
+    borderRadius: 10, // Responsive border radius (7.5% of screen width)
+    backgroundColor: colors.white,
     justifyContent: 'center',
     alignItems: 'center',
   },
   socialIcon: {
-    width: screenWidth * 0.1, // Responsive width (10% of screen width)
-    height: screenWidth * 0.1, // Responsive height (10% of screen width)
+    width: 40, // Responsive width (10% of screen width)
+    height: 40, // Responsive height (10% of screen width)
   },
 });
+
 
   export default HomeScreen;

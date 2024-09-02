@@ -1,75 +1,63 @@
-import React, { useContext } from 'react';
-import {
-  View,
-  Text,
-  FlatList,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-  TextInput,
-  Dimensions
-} from 'react-native';
-import { CartContext } from '../../screens/components/CartContext';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../../screens/store/Store';
+import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity, TextInput, Dimensions,PixelRatio } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { removeFromCart, increaseQuantity, decreaseQuantity } from '../../screens/store/cartSlice';
 import { RootStackParamList } from '../../../types';
-
+import colors from '../../constants/colors';
+import { CartItem } from '../../screens/store/cartSlice';
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 type WelcomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'ProductDetail'>;
-  
-interface Product {
-  id: string;
-  imageURL: string;
-  Title: string;
-  Price: number;
-}
 
-const CartPage = () => {
-  const context = useContext(CartContext);
 
-  if (!context) {
-    console.error('CartContext is not available');
-    return null;
-  }
-
-  const { cartItems, removeFromCart } = context;
-
+const CartPage: React.FC = () => {
+  const cartItems: CartItem[] = useSelector((state: RootState) => state.cart.cartItems);
+  const dispatch = useDispatch();
   const navigation = useNavigation<WelcomeScreenNavigationProp>();
-  const totalPrice = cartItems.reduce((acc, item) => acc + item.Price, 0);
-  const discount = 5;
-  const finalPrice = totalPrice - discount;
 
-  const renderItem = ({ item }: { item: Product }) => (
-    <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('ProductDetail', { productId: item.id })}>
-      <Image source={{ uri: item.imageURL }} style={styles.image} />
+  // Calculate total price
+  const totalPrice = cartItems.reduce((acc, item) => acc + item.Price * item.quantity, 0);
+
+  const finalPrice = totalPrice ;
+
+  const renderItem = ({ item }: { item: CartItem }) => (
+    
+    <TouchableOpacity
+      style={styles.card}
+      onPress={() => navigation.navigate('ProductDetail', { productId: item.id })}
+    >
+      <Image source={{ uri: item.ImageURL }} style={styles.image} />
       <View style={styles.details}>
         <Text style={styles.title}>{item.Title}</Text>
         <Text style={styles.rating}>4.0 ★★★★★</Text>
-        <Text style={styles.price}>${item.Price.toFixed(2)}</Text>
+        <Text style={styles.price}>${(item.Price * item.quantity).toFixed(2)}</Text>
       </View>
       <View style={styles.controls}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => dispatch(decreaseQuantity(item.id))}>
           <Text style={styles.controlButton}>-</Text>
         </TouchableOpacity>
-        <Text style={styles.quantity}>01</Text>
-        <TouchableOpacity>
+        <Text style={styles.quantity}>{item.quantity.toString().padStart(2, '0')}</Text>
+        <TouchableOpacity onPress={() => dispatch(increaseQuantity(item.id))}>
           <Text style={styles.controlButton}>+</Text>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity onPress={() => removeFromCart(item.id)} style={styles.checkbox}>
+      <TouchableOpacity onPress={() => dispatch(removeFromCart(item.id))} style={styles.checkbox}>
         <Text style={styles.checkboxText}>✓</Text>
       </TouchableOpacity>
     </TouchableOpacity>
+    
   );
 
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Product List</Text>
-      <FlatList
+      <FlatList<CartItem>
         data={cartItems}
         renderItem={renderItem}
-        keyExtractor={item => item.id}
+        keyExtractor={(item) => item.id}
         contentContainerStyle={styles.list}
       />
 
@@ -83,10 +71,6 @@ const CartPage = () => {
       <View style={styles.summaryContainer}>
         <Text style={styles.summaryText}>Items ({cartItems.length})</Text>
         <Text style={styles.summaryPrice}>${totalPrice.toFixed(2)}</Text>
-      </View>
-      <View style={styles.summaryContainer}>
-        <Text style={styles.summaryText}>Discount</Text>
-        <Text style={styles.summaryDiscount}>$5</Text>
       </View>
       <View style={styles.summaryContainer}>
         <Text style={styles.summaryText}>Shipping</Text>
@@ -105,18 +89,19 @@ const CartPage = () => {
   );
 };
 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5F5F5',
-    paddingHorizontal: screenWidth * 0.04, // Responsive padding
-    marginBottom: screenHeight * 0.1, // Responsive margin
+    backgroundColor: colors.shadewhite,
+    paddingHorizontal: screenWidth * 0.04,
+    marginBottom: 80,
   },
   header: {
-    fontSize: screenWidth * 0.06, // Responsive font size
+    fontSize: PixelRatio.get() * 7, 
     fontWeight: 'bold',
     color: 'black',
-    marginVertical: screenHeight * 0.02, // Responsive margin
+    marginVertical: 20,
     textAlign: 'center',
   },
   list: {
@@ -126,138 +111,139 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#FFF',
-    marginVertical: screenHeight * 0.01, // Responsive margin
-    padding: screenWidth * 0.03, // Responsive padding
-    borderRadius: screenWidth * 0.02, // Responsive border radius
-    shadowColor: '#000',
+    marginVertical:10,
+    padding: 10,
+    borderRadius: 10,
+    shadowColor: colors.halfblack,
     shadowOpacity: 0.1,
     shadowOffset: { width: 0, height: 2 },
     elevation: 2,
   },
   image: {
-    width: screenWidth * 0.15, // Responsive width
-    height: screenWidth * 0.15, // Responsive height
-    borderRadius: screenWidth * 0.02, // Responsive border radius
+    width: '30%',
+    height: 130,
+    borderRadius: 10,
   },
   details: {
     flex: 1,
-    paddingHorizontal: screenWidth * 0.03, // Responsive padding
+    paddingHorizontal: 10,
   },
   title: {
-    fontSize: screenWidth * 0.04, // Responsive font size
+    fontSize: PixelRatio.get() * 4,// Title font size * 7
     fontWeight: 'bold',
-    color: '#333',
+    color: colors.darkgrey,
   },
   rating: {
-    fontSize: screenWidth * 0.035, // Responsive font size
-    color: 'orange',
-    marginVertical: screenHeight * 0.01, // Responsive margin
+    fontSize: PixelRatio.get() * 4,// Other text font size * 5
+    color: colors.orange,
+    marginVertical: 10,
   },
   price: {
-    fontSize: screenWidth * 0.04, // Responsive font size
+    fontSize: PixelRatio.get() * 5, // Title font size * 7
     fontWeight: 'bold',
-    color: '#333',
+    color: colors.darkgrey,
   },
   controls: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginRight: screenWidth * 0.03, // Responsive margin
+    marginRight: 30,
   },
   controlButton: {
-    fontSize: screenWidth * 0.05, // Responsive font size
-    paddingHorizontal: screenWidth * 0.02, // Responsive padding
-    color: '#333',
+    fontSize: PixelRatio.get() * 6, // Other text font size * 5
+    paddingHorizontal: screenWidth * 0.02,
+    color: colors.darkgrey,
   },
   quantity: {
-    fontSize: screenWidth * 0.04, // Responsive font size
+    fontSize: PixelRatio.get() * 5, // Title font size * 7
     fontWeight: 'bold',
-    marginHorizontal: screenWidth * 0.02, // Responsive margin
+    marginHorizontal: screenWidth * 0.02,
   },
   checkbox: {
-    width: screenWidth * 0.06, // Responsive width
-    height: screenWidth * 0.06, // Responsive height
-    backgroundColor: '#E0464E',
-    borderRadius: screenWidth * 0.03, // Responsive border radius
+    width: '6%',
+    height: 25,
+    backgroundColor: colors.primary,
+    borderRadius: screenWidth * 0.03,
     alignItems: 'center',
     justifyContent: 'center',
   },
   checkboxText: {
-    fontSize: screenWidth * 0.04, // Responsive font size
-    color: '#FFF',
+    fontSize: PixelRatio.get() * 5, // Other text font size * 5
+    color: colors.white,
     textAlign: 'center',
   },
   promoContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: screenHeight * 0.02, // Responsive margin
+    marginVertical: 20,
   },
   promoInput: {
     flex: 1,
     borderWidth: 1,
-    borderColor: '#DDD',
-    borderRadius: screenWidth * 0.02, // Responsive border radius
-    padding: screenWidth * 0.03, // Responsive padding
+    borderColor: colors.grey,
+    borderRadius: 10,
+    padding: 15,
   },
   applyButton: {
-    backgroundColor: '#E0464E',
-    borderRadius: screenWidth * 0.02, // Responsive border radius
-    padding: screenWidth * 0.03, // Responsive padding
-    marginLeft: screenWidth * 0.02, // Responsive margin
+    height:60,
+    backgroundColor: colors.primary,
+    borderRadius: 10,
+    paddingVertical: 15, // Fixed height for button
+    paddingHorizontal: 10,
+    marginLeft: 10,
   },
   applyText: {
-    color: '#FFF',
+    color: colors.white,
     fontWeight: 'bold',
-    fontSize: screenWidth * 0.04, // Responsive font size
+    fontSize: PixelRatio.get() * 5, // Other text font size * 5
+
   },
   summaryContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingVertical: screenHeight * 0.01, // Responsive padding
+    paddingVertical: 8,
   },
   summaryText: {
-    fontSize: screenWidth * 0.04, // Responsive font size
-    color: '#333',
+    fontSize: PixelRatio.get() * 5, // Other text font size * 5
+    color: colors.darkgrey,
   },
   summaryPrice: {
-    fontSize: screenWidth * 0.04, // Responsive font size
-    color: '#333',
-  },
-  summaryDiscount: {
-    fontSize: screenWidth * 0.04, // Responsive font size
-    color: '#E0464E',
+    fontSize: PixelRatio.get() * 5, // Other text font size * 5
+    color: colors.darkgrey,
   },
   summaryShipping: {
-    fontSize: screenWidth * 0.04, // Responsive font size
-    color: '#00A000',
+    fontSize: PixelRatio.get() * 5, // Other text font size * 5
+    color: colors.green,
   },
   totalContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingVertical: screenHeight * 0.02, // Responsive padding
+    paddingVertical:  10,
     borderTopWidth: 1,
-    borderColor: '#DDD',
+    borderColor: colors.grey,
   },
   totalLabel: {
-    fontSize: screenWidth * 0.05, // Responsive font size
+    fontSize: PixelRatio.get() * 6, // Title font size * 7
     fontWeight: 'bold',
-    color: '#333',
+    color: colors.darkgrey,
   },
   totalPrice: {
-    fontSize: screenWidth * 0.05, // Responsive font size
+    fontSize: PixelRatio.get() * 6, // Title font size * 7
     fontWeight: 'bold',
-    color: '#E0464E',
+    color: colors.primary,
   },
   proceedButton: {
-    backgroundColor: '#E0464E',
-    borderRadius: screenWidth * 0.02, // Responsive border radius
-    padding: screenWidth * 0.04, // Responsive padding
+    backgroundColor: colors.primary,
+    borderRadius: 10,
+    paddingVertical: 20, // Fixed height for button
+    paddingHorizontal: 40
   },
   proceedText: {
-    color: '#FFF',
-    fontSize: screenWidth * 0.05, // Responsive font size
+    color: colors.white,
+    fontSize: PixelRatio.get() * 6, // Title font size * 7
     fontWeight: 'bold',
     textAlign: 'center',
   },
 });
+
 
 export default CartPage;

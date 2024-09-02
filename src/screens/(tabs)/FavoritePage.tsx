@@ -5,15 +5,10 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../../types';
+import colors from '../../constants/colors';
+import Product from '../../services/apiService';
 
 type FavoriteScreenNavigationProp = StackNavigationProp<RootStackParamList, 'FavoritePage'>;
-
-interface Product {
-  id: string;
-  ImageURL: string;
-  Title: string;
-  Price: string;
-}
 
 const FavoritePage: React.FC = () => {
   const [favoriteProducts, setFavoriteProducts] = useState<Product[]>([]);
@@ -30,7 +25,7 @@ const FavoritePage: React.FC = () => {
     <ProductCard
       imageURL={item.ImageURL}
       Title={item.Title}
-      Price={item.Price}
+      Price={(item.Price).toString()}
       onPress={() => navigation.navigate('ProductDetail', { productId: item.id })}
       onToggleFavorite={(isFavorite) => {
         if (isFavorite) {
@@ -68,7 +63,7 @@ const FavoritePage: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.white,
     padding: 16,
   },
   header: {
@@ -78,7 +73,7 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#000000',
+    color: colors.black,
     textAlign:'center'
   },
   row: {
@@ -91,7 +86,7 @@ const styles = StyleSheet.create({
   },
   emptyText: {
     fontSize: 18,
-    color: '#888888',
+    color: colors.grey,
   },
 });
 

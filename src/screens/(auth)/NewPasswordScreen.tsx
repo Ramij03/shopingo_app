@@ -5,6 +5,7 @@ import { RootStackParamList } from '../../../types';
 import { useNavigation } from '@react-navigation/native';
 import 'firebase/auth';
 import { getAuth, updatePassword } from 'firebase/auth';
+import colors from '../../constants/colors';
 
 type ForgetPasswordScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Login'>;
 
@@ -105,14 +106,14 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 30,
-    color: '#383B46',
+    color: colors.black,
     fontWeight: 'bold',
     marginBottom: 10,
     textAlign: 'center',
   },
   subtitle: {
     fontSize: 14,
-    color: '#888990',
+    color: colors.grey,
     marginBottom: 30,
     textAlign: 'center',
   },
@@ -123,28 +124,28 @@ const styles = StyleSheet.create({
     fontFamily: 'SourceSansPro-Semibold',
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#383B46',
+    color: colors.darkgrey,
     marginBottom: 10,
   },
   formInput: {
     height: 50,
     paddingHorizontal: 10,
     fontSize: 16,
-    color: '#6c757d',
-    backgroundColor: '#F7F8F9',
+    color: colors.grey,
+    backgroundColor: colors.darkwhite,
   },
   button: {
-    backgroundColor: '#dc3545',
+    backgroundColor: colors.primary,
     paddingVertical: 15,
     borderRadius: 5,
     alignItems: 'center',
   },
   buttonText: {
-    color: '#FFF',
+    color: colors.white,
     fontSize: 18,
   },
   errorText: {
-    color: 'red',
+    color: colors.primary,
     marginBottom: 20,
     textAlign: 'center',
   },

@@ -4,14 +4,14 @@ import axios from 'axios';
   id: string;
   ImageURL: string;
   Title: string;
-  Price: string;
+  Price: number;
   Description?: string;
   Type?: string;
   Materials?: string;
   Fittings?: string;
 }
 
-
+export default Product;
 
 export const fetchProducts = async (): Promise<Product[]> => {
   try {

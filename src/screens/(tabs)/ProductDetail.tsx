@@ -1,11 +1,13 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { Text,Dimensions, ScrollView, StyleSheet, View, Image, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Text, Dimensions, ScrollView, StyleSheet, View, Image, TouchableOpacity,PixelRatio } from 'react-native';
 import { RouteProp, useRoute, useNavigation } from '@react-navigation/native';
 import { fetchProductById, fetchSimilarProducts } from '../../services/apiService';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../../types';
-import { CartContext } from '../../screens/components/CartContext';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../../screens/store/cartSlice'; // Import your addToCart action
 import Snackbar from 'react-native-snackbar';
+import colors from '../../constants/colors';
 
 
 // Get screen dimensions
@@ -17,7 +19,7 @@ interface Product {
   id: string;
   ImageURL: string;
   Title: string;
-  Price: string;
+  Price: number;
   Review?: string;
   Description?: string;
   Type?: string;
@@ -35,14 +37,7 @@ const ProductDetail: React.FC = () => {
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
 
-  const context = useContext(CartContext);
-
-  if (!context) {
-    console.error('CartContext is not available');
-    return null;
-  }
-
-  const { addToCart } = context;
+  const dispatch = useDispatch(); // Initialize the Redux dispatch
 
   useEffect(() => {
     const loadProductData = async () => {
@@ -71,23 +66,22 @@ const ProductDetail: React.FC = () => {
 
   const handleAddToCart = () => {
     if (product) {
-      addToCart({
+      dispatch(addToCart({
         id: product.id,
-        imageURL: product.ImageURL,
+        ImageURL: product.ImageURL,
         Title: product.Title,
-        Price: parseFloat(product.Price),
-      });
+        Price: product.Price,
+      }));
 
-      // Show snackbar message
       Snackbar.show({
         text: `Added to cart`,
         duration: Snackbar.LENGTH_SHORT,
-        backgroundColor:'#E0464E'
+        backgroundColor: '#E0464E',
       });
     }
   };
 
-  const colors = ['#FFFFFF', '#8A8EF9', '#24BC61', '#7B7881'];
+  const color = [colors.white, colors.orange, colors.purple, colors.grey];
   const sizes = ['5', '6', '7', '8'];
 
   return (
@@ -104,7 +98,7 @@ const ProductDetail: React.FC = () => {
           <View>
             <Text style={styles.sectionTitle}>Colors</Text>
             <View style={styles.optionsContainer}>
-              {colors.map((color, index) => (
+              {color.map((color, index) => (
                 <TouchableOpacity
                   key={index}
                   style={[
@@ -170,10 +164,11 @@ const ProductDetail: React.FC = () => {
   );
 };
 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8f8f8',
+    backgroundColor: colors.shadewhite,
   },
   loadingContainer: {
     flex: 1,
@@ -181,120 +176,132 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   productImage: {
-    width: screenWidth,
-    height: screenHeight * 0.4, // Responsive height
+    width: '100%', // Percentage width
+    height: 300, // Fixed height to maintain layout
     resizeMode: 'contain',
   },
   detailsContainer: {
-    padding: screenWidth * 0.04, // Responsive padding
+    padding: 16, // Static padding for consistency
   },
   productTitle: {
-    fontSize: screenWidth * 0.06, // Responsive font size
+    fontSize: PixelRatio.get() * 6, // Responsive font size
     fontWeight: 'bold',
-    color: '#000000',
+    color: colors.black,
   },
   productPrice: {
-    fontSize: screenWidth * 0.05, // Responsive font size
+    fontSize: PixelRatio.get() * 7, // Responsive font size
     fontWeight: '600',
-    color: '#E0464E',
-    marginVertical: screenHeight * 0.01, // Responsive margin
+    color: colors.primary,
+    marginVertical: 10, // Static margin for consistency
   },
   productReview: {
-    fontSize: screenWidth * 0.04, // Responsive font size
-    color: '#888',
-    marginVertical: screenHeight * 0.01, // Responsive margin
+    fontSize: PixelRatio.get() * 6, // Responsive font size
+    color: colors.grey,
+    marginVertical: 10, // Static margin for consistency
   },
   sectionTitle: {
-    fontSize: screenWidth * 0.05, // Responsive font size
+    fontSize: PixelRatio.get() * 6, // Responsive font size
     fontWeight: 'bold',
-    marginVertical: screenHeight * 0.015, // Responsive margin
-    color: '#000000',
+    marginVertical: 12, // Static margin for consistency
+    color: colors.black,
   },
   productDescription: {
-    fontSize: screenWidth * 0.04, // Responsive font size
+    fontSize: PixelRatio.get() * 5, // Responsive font size
     fontWeight: '400',
-    color: '#555',
-    marginVertical: screenHeight * 0.02, // Responsive margin
+    color: colors.grey,
+    marginVertical: 14, // Static margin for consistency
   },
   OptionsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: screenHeight * 0.02, // Responsive margin
+    marginBottom: 15, // Static margin for consistency
+    marginRight:8,
   },
   optionsContainer: {
     flexDirection: 'row',
+    
   },
   colorOption: {
-    width: screenWidth * 0.07, // Responsive width
-    height: screenWidth * 0.07, // Responsive height
-    borderRadius: screenWidth * 0.035, // Responsive border radius
-    borderWidth: screenWidth * 0.015, // Responsive border width
-    borderColor: '#ddd',
-    marginHorizontal: screenWidth * 0.02, // Responsive margin
+    width: '10%', // Percentage width
+    height: 30, // Fixed height for consistent layout
+    borderRadius: 20, // Fixed border radius
+    borderWidth: 2, // Fixed border width
+    borderColor: colors.lightgrey,
+    marginHorizontal: 8, // Static margin for consistency
   },
   sizeOption: {
-    width: screenWidth * 0.08, // Responsive width
-    height: screenWidth * 0.08, // Responsive height
-    borderRadius: screenWidth * 0.04, // Responsive border radius
-    borderWidth: screenWidth * 0.015, // Responsive border width
-    borderColor: '#ddd',
-    marginHorizontal: screenWidth * 0.02, // Responsive margin
+    width: '12%', // Percentage width
+    height: 35, // Fixed height for consistent layout
+    borderRadius: 20, // Fixed border radius
+    borderWidth: 2, // Fixed border width
+    borderColor: colors.lightgrey,
+    marginHorizontal: 8,
     alignItems: 'center',
     justifyContent: 'center',
   },
   sizeText: {
-    fontSize: screenWidth * 0.04, // Responsive font size
-    color: '#000000',
+    fontSize: PixelRatio.get() * 6, // Responsive font size
+    color: colors.black,
   },
   selectedOptionC: {
-    borderColor: '#FF9922',
-    borderWidth: screenWidth * 0.02, // Responsive border width
+    borderColor: colors.orange,
+    borderWidth: 3, // Fixed border width
   },
   selectedOptionS: {
-    color: '#E0464E',
-    borderColor: '#E0464E',
-    borderWidth: screenWidth * 0.015, // Responsive border width
+    color: colors.primary,
+    borderColor: colors.orange,
+    borderWidth: 3, // Fixed border width
   },
   similarProductsContainer: {
-    marginVertical: screenHeight * 0.02, // Responsive margin
+    paddingTop: 10, // Static padding for consistency
   },
   productCard: {
-    backgroundColor: '#fff',
-    borderRadius: screenWidth * 0.02, // Responsive border radius
-    padding: screenWidth * 0.03, // Responsive padding
-    marginRight: screenWidth * 0.02, // Responsive margin
-    width: screenWidth * 0.3, // Responsive width
-    elevation: 2,
+    width: '32%', // Percentage width
+    height: 300, // Fixed height for consistent layout
+    backgroundColor: colors.white,
+    margin:4,
+    padding: 10, // Static padding for consistency
+    borderRadius: 10, // Fixed border radius
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 5, // Fixed shadow offset
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 10, // Fixed shadow radius
+    elevation: 5,
   },
   productImageSmall: {
     width: '100%',
-    height: screenHeight * 0.1, // Responsive height
-    borderRadius: screenWidth * 0.02, // Responsive border radius
-    marginBottom: screenHeight * 0.01, // Responsive margin
+    height: '75%',
+    resizeMode: 'contain',
   },
   productTitleSmall: {
-    fontSize: screenWidth * 0.04, // Responsive font size
-    fontWeight: '600',
-    marginBottom: screenHeight * 0.01, // Responsive margin
+    fontSize: PixelRatio.get() * 4, // Responsive font size
+    fontWeight: 'bold',
+    marginVertical: 8, // Static margin for consistency
   },
   productPriceSmall: {
-    fontSize: screenWidth * 0.04, // Responsive font size
-    color: '#E0464E',
+    fontSize: PixelRatio.get() * 5, // Responsive font size
+    color: colors.primary,
+    fontWeight: '600',
+   
   },
   addtocartcontainer: {
-    margin: screenWidth * 0.02, // Responsive margin
+    padding: 15, // Static padding for consistency
   },
   addToCartButton: {
-    backgroundColor: '#E0464E',
-    padding: screenWidth * 0.04, // Responsive padding
-    borderRadius: screenWidth * 0.02, // Responsive border radius
+    backgroundColor: colors.primary,
+    paddingVertical: 18, // Fixed height for buttons
+    borderRadius: 10, // Fixed border radius
     alignItems: 'center',
   },
   addToCartButtonText: {
-    color: '#FFFFFF',
-    fontSize: screenWidth * 0.04, // Responsive font size
+    fontSize: PixelRatio.get() * 6, // Responsive font size
     fontWeight: 'bold',
+    color: colors.white,
   },
 });
+
 
 export default ProductDetail;

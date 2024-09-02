@@ -3,6 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'reac
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { RootStackParamList } from '../../../types';
+import colors from '../../constants/colors';
 
 type VerifyScreenNavigationProp = StackNavigationProp<RootStackParamList, 'NewPasswordScreen'>;
 type VerifyScreenRouteProp = RouteProp<RootStackParamList, 'Verify'>;
@@ -49,26 +50,26 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 18,
     marginBottom: 10,
-    color: '#333',
+    color: colors.darkgrey,
   },
   input: {
     height: 50,
-    borderColor: '#ccc',
+    borderColor: colors.grey,
     borderWidth: 1,
     borderRadius: 5,
     paddingHorizontal: 10,
     marginBottom: 20,
     fontSize: 16,
-    color: '#333',
+    color: colors.darkgrey,
   },
   button: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: colors.green,
     paddingVertical: 15,
     borderRadius: 5,
     alignItems: 'center',
   },
   buttonText: {
-    color: '#fff',
+    color: colors.white,
     fontSize: 16,
   },
 });

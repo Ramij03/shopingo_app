@@ -10,6 +10,7 @@ import {
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../types'; // Ensure this path is correct
 import { PanGestureHandler, PanGestureHandlerGestureEvent } from 'react-native-gesture-handler';
+import colors from '../../constants/colors';
 
 type StoryViewProps = NativeStackScreenProps<RootStackParamList, 'StoryView'>;
 
@@ -144,7 +145,7 @@ const StoryView: React.FC<StoryViewProps> = ({ route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000',
+    backgroundColor: colors.black,
   },
   storyImage: {
     width: '100%',
@@ -164,12 +165,12 @@ const styles = StyleSheet.create({
     right: 10,
   },
   title: {
-    color: '#fff',
+    color: colors.white,
     fontSize: 18,
     fontWeight: 'bold',
   },
   timestamp: {
-    color: '#fff',
+    color: colors.white,
     fontSize: 14,
     marginTop: 5,
   },
@@ -179,11 +180,11 @@ const styles = StyleSheet.create({
     left: 20,
     right: 20,
     padding: 15,
-    backgroundColor: '#E94057',
+    backgroundColor: colors.primary,
     borderRadius: 8,
   },
   buttonText: {
-    color: '#fff',
+    color: colors.white,
     fontSize: 16,
     textAlign: 'center',
     fontWeight: 'bold',

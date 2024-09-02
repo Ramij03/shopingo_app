@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Dimensions,PixelRatio} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../../types'; 
@@ -35,48 +35,49 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    padding: screenWidth * 0.05, // Responsive padding (5% of screen width)
+    padding: 20, // Static padding
     backgroundColor: '#FFF',
   },
   containertext: {
-    marginTop: screenHeight * 0.2, // Responsive margin (20% of screen height)
+    marginTop: 100, // Static margin from top
   },
   title: {
-    fontSize: screenWidth * 0.08, // Responsive font size (8% of screen width)
+    fontSize: PixelRatio.get() * 9, // Responsive font size (8% of screen width)
     fontWeight: 'bold',
-    marginBottom: screenHeight * 0.02, // Responsive margin (2% of screen height)
+    marginBottom: 20, // Static margin from bottom
     color: '#383B46',
     textAlign: 'center',
   },
   subtitle: {
-    fontSize: screenWidth * 0.05, // Responsive font size (5% of screen width)
+    fontSize: PixelRatio.get() * 6, // Responsive font size (5% of screen width)
     color: '#888990',
     textAlign: 'center',
-    marginBottom: screenHeight * 0.04, // Responsive margin (4% of screen height)
+    marginBottom: 50, // Static margin from bottom
   },
   button: {
-    width: screenWidth * 0.9, // Responsive width (90% of screen width)
-    height: screenHeight * 0.07, // Responsive height (7% of screen height)
+    width: '90%', // Percentage width for responsiveness
+    height: 55, // Fixed height
     backgroundColor: '#E0464E',
-    paddingVertical: screenHeight * 0.02, // Responsive padding (2% of screen height)
-    paddingHorizontal: screenWidth * 0.1, // Responsive padding (10% of screen width)
-    borderRadius: screenWidth * 0.015, // Responsive border radius (1.5% of screen width)
+    paddingVertical: 10, // Static padding vertical
+    paddingHorizontal: 15, // Static padding horizontal
+    borderRadius: 10, // Static border radius
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: screenHeight * 0.38, // Responsive margin (30% of screen height)
+    marginTop: 350, // Static margin from top
   },
   buttonText: {
     color: '#FFF',
-    fontSize: screenWidth * 0.05, // Responsive font size (5% of screen width)
+    fontSize: PixelRatio.get() * 6, // Responsive font size (5% of screen width)
     textAlign: 'center',
   },
   logoContainer: {
-    marginTop: screenHeight * 0.03, // Responsive margin (3% of screen height)
+    marginTop: 30, // Static margin from top
   },
   logoText: {
-    fontSize: screenWidth * 0.08, // Responsive font size (8% of screen width)
+    fontSize: PixelRatio.get() * 12, // Responsive font size (8% of screen width)
     fontWeight: 'bold',
   },
 });
+
 
 export default WelcomeScreen;

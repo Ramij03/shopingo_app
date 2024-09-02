@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Dimensions,PixelRatio } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../../types';
 import auth from '@react-native-firebase/auth';
+import colors from '../../constants/colors';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
@@ -68,7 +69,7 @@ const SignUpScreen: React.FC = () => {
       } catch (firebaseError: any) {
         // Check if the error is an instance of Error
         if (firebaseError instanceof Error) {
-          setError(firebaseError.message);
+          setError('Incorrect Email or Password');
         } else {
           setError('An unexpected error occurred. Please try again.');
         }
@@ -142,56 +143,57 @@ const SignUpScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: screenWidth * 0.05, // Responsive padding (5% of screen width)
+    padding: 20, // Static padding
     justifyContent: 'center',
-    backgroundColor: '#FFF',
+    backgroundColor: colors.white,
   },
   title: {
-    fontSize: screenWidth * 0.07, // Responsive font size (7% of screen width)
+    fontSize: PixelRatio.get() * 8, // Responsive font size (7% of screen width)
     fontWeight: 'bold',
-    marginBottom: screenHeight * 0.02, // Responsive margin (2% of screen height)
-    color: '#383B46',
+    marginBottom: 20, // Static margin from bottom
+    color: colors.darkgrey,
     textAlign: 'center',
   },
   subtitle: {
-    fontSize: screenWidth * 0.04, // Responsive font size (4% of screen width)
-    color: '#888990',
-    marginBottom: screenHeight * 0.04, // Responsive margin (4% of screen height)
+    fontSize: PixelRatio.get() * 5, // Responsive font size (4% of screen width)
+    color: colors.grey,
+    marginBottom: 30, // Static margin from bottom
     textAlign: 'center',
   },
   formContainer: {
-    marginBottom: screenHeight * 0.03, // Responsive margin (3% of screen height)
-    
+    marginBottom: 20, // Static margin from bottom
   },
   formLabel: {
     fontFamily: 'SourceSansPro-Semibold',
-    fontSize: screenWidth * 0.04, // Responsive font size (4% of screen width)
+    fontSize: PixelRatio.get() * 5, // Responsive font size (4% of screen width)
     fontWeight: 'bold',
-    color: '#383B46',
-    marginBottom: screenHeight * 0.02, // Responsive margin (2% of screen height)
+    color: colors.darkgrey,
+    marginBottom: 10, // Static margin from bottom
   },
   formInput: {
-    height: screenHeight * 0.07, // Responsive height (7% of screen height)
-    paddingHorizontal: screenWidth * 0.03, // Responsive padding (3% of screen width)
-    fontSize: screenWidth * 0.04, // Responsive font size (4% of screen width)
-    color: '#6c757d',
-    backgroundColor: '#F7F8F9',
+    height: 50, // Fixed height
+    paddingHorizontal: 15, // Static padding horizontal
+    fontSize: PixelRatio.get() * 5, // Responsive font size (4% of screen width)
+    color: colors.grey,
+    backgroundColor: colors.shadewhite,
+    borderRadius:6
   },
   button: {
-    backgroundColor: '#dc3545',
-    paddingVertical: screenHeight * 0.02, // Responsive padding (2% of screen height)
-    borderRadius: screenWidth * 0.02, // Responsive border radius (2% of screen width)
+    backgroundColor: colors.primary,
+    paddingVertical: 15, // Static padding vertical
+    borderRadius: 10, // Static border radius
     alignItems: 'center',
   },
   buttonText: {
-    color: '#FFF',
-    fontSize: screenWidth * 0.05, // Responsive font size (5% of screen width)
+    color: colors.white,
+    fontSize: PixelRatio.get() * 5.5, // Responsive font size (5% of screen width)
   },
   errorText: {
-    color: 'red',
-    marginBottom: screenHeight * 0.02, // Responsive margin (2% of screen height)
+    color: colors.primary,
+    marginBottom: 15, // Static margin from bottom
   },
 });
+
 
 
 export default SignUpScreen;

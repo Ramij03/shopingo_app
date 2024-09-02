@@ -9,7 +9,6 @@ import ForgetPassword from './src/screens/(auth)/ForgetPassword';
 import ResetPassword from './src/screens/(auth)/NewPasswordScreen';
 import WelcomeScreen from './src/screens/(auth)/WelcomeScreen';
 import VerifyScreen from './src/screens/(auth)/VerifyScreen';
-import OnBoardingScreen from './src/screens/onBoarding/OnBoardingScreen';
 import HomePage from './src/screens/(tabs)/HomePage';
 import ProfilePage from './src/screens/(tabs)/ProfilePage';
 import FavoritePage from './src/screens/(tabs)/FavoritePage';
@@ -20,7 +19,10 @@ import ProductDetail from './src/screens/(tabs)/ProductDetail';
 import StoryView from './src/screens/components/StoryView';
 import { CartProvider } from './src/screens/components/CartContext';
 import messaging from '@react-native-firebase/messaging';
-
+import OnBoard from './src/screens/(auth)/OnBoard';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from './src/screens/store/Store';
 
 type RootStackParamList = {
   Home: undefined;
@@ -30,7 +32,7 @@ type RootStackParamList = {
   ResetPassword: undefined;
   Verify: { verificationCode: string };
   Welcome: undefined;
-  OnBoardingScreen: undefined;
+  OnBoard: undefined;
   HomePage: undefined;
   BottomTabs: undefined;
   ProfilePage: undefined;
@@ -68,11 +70,12 @@ function App(): React.JSX.Element {
   },[])
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}> 
-    <CartProvider>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+      <GestureHandlerRootView style={{ flex: 1 }}> 
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="OnBoardingScreen"
+        initialRouteName="OnBoard"
         screenOptions={{
           headerTitleAlign: 'center',
           headerTitleStyle: {
@@ -87,7 +90,7 @@ function App(): React.JSX.Element {
           },
         }}
       >
-        <Stack.Screen name="OnBoardingScreen" component={OnBoardingScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="OnBoard" component={OnBoard} options={{ headerShown: false }} />
         <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
         <Stack.Screen
           name="SignUp"
@@ -165,8 +168,10 @@ function App(): React.JSX.Element {
         <Stack.Screen name="StoryView" component={StoryView} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
-   </CartProvider>
    </GestureHandlerRootView>
+      </PersistGate>
+    </Provider>
+    
   );
 }
 

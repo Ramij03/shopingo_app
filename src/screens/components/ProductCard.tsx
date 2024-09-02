@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Text, Image, StyleSheet, View, TouchableOpacity ,Dimensions } from 'react-native';
+import { Text, Image, StyleSheet, View, TouchableOpacity ,Dimensions,PixelRatio } from 'react-native';
+import colors from '../../constants/colors';
+import { Container } from '@react-email/components';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
@@ -36,6 +38,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   };
 
   return (
+    
     <TouchableOpacity style={styles.card} onPress={onPress} activeOpacity={0.8}>
       <Image source={{ uri: imageURL }} style={styles.image} />
       <TouchableOpacity onPress={handleFavoritePress} style={styles.heartIconContainer}>
@@ -43,7 +46,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           source={require('../../assets/icons/Love1.png')} // Update path as needed
           style={[
             styles.heartIcon,
-            { tintColor: favorite ? '#FF6464' : '#CCCCCC' },
+            { tintColor: favorite ? colors.primary : colors.grey },
           ]}
         />
       </TouchableOpacity>
@@ -59,52 +62,58 @@ const ProductCard: React.FC<ProductCardProps> = ({
         </View>
       </View>
     </TouchableOpacity>
+   
   );
 };
 
 const styles = StyleSheet.create({
+  container:{
+    marginHorizontal: screenWidth * 0.04,
+  },
   card: {
     width: screenWidth * 0.48, // Responsive width (roughly half the screen width minus margins)
-    height: screenHeight * 0.4, // Responsive height
-    borderRadius: screenWidth * 0.02, // Responsive border radius
-    backgroundColor: '#FFFFFF',
-    marginHorizontal: screenWidth * 0.02, // Responsive margin
+    height: 350, 
+    borderRadius: 10,
+    backgroundColor: colors.white,
+    marginHorizontal: 6, 
+    marginVertical: 6, 
     overflow: 'hidden',
-    shadowColor: '#efefef',
+    shadowColor: colors.black,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
-    shadowRadius: screenWidth * 0.02, // Responsive shadow radius
+    shadowRadius: 2,
     elevation: 5,
+  
   },
   image: {
     width: '100%',
-    height: screenHeight * 0.25, // Responsive height
+    height: 250, 
   },
   infoContainer: {
-    padding: screenWidth * 0.03, // Responsive padding
-    backgroundColor: '#FFFFFF',
+    padding: 10, 
+    backgroundColor: colors.white,
   },
   title: {
-    fontSize: screenWidth * 0.04, // Responsive font size
+    fontSize:PixelRatio.get() * 5, 
     fontWeight: '600',
-    color: '#131212',
-    marginBottom: screenHeight * 0.01, // Responsive margin
+    color: colors.black,
+    marginBottom: 5, 
   },
   priceContainer: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   price: {
-    fontSize: screenWidth * 0.045, // Responsive font size
+    fontSize: PixelRatio.get() * 6, // Responsive font size
     fontWeight: '700',
     color: 'black',
   },
   originalPrice: {
-    fontSize: screenWidth * 0.04, // Responsive font size
+    fontSize: PixelRatio.get() * 4, // Responsive font size
     fontWeight: '600',
-    color: 'gray',
+    color: colors.grey,
     textDecorationLine: 'line-through',
-    marginLeft: screenWidth * 0.02, // Responsive margin
+    marginLeft: 10, 
   },
   heartIconContainer: {
     position: 'absolute',
@@ -113,8 +122,8 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   heartIcon: {
-    width: screenWidth * 0.06, // Responsive icon size
-    height: screenWidth * 0.06, // Responsive icon size
+    width: 25, 
+    height: 25, 
   },
 });
 
