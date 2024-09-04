@@ -32,7 +32,7 @@ const CartPage: React.FC = () => {
       <Image source={{ uri: item.ImageURL }} style={styles.image} />
       <View style={styles.details}>
         <Text style={styles.title}>{item.Title}</Text>
-        <Text style={styles.rating}>4.0 ★★★★★</Text>
+        <Text style={styles.rating}>5.0 ★★★★★</Text>
         <Text style={styles.price}>${(item.Price * item.quantity).toFixed(2)}</Text>
       </View>
       <View style={styles.controls}>
@@ -53,6 +53,7 @@ const CartPage: React.FC = () => {
 
   return (
     <View style={styles.container}>
+     
       <Text style={styles.header}>Product List</Text>
       <FlatList<CartItem>
         data={cartItems}
@@ -101,7 +102,7 @@ const styles = StyleSheet.create({
     fontSize: PixelRatio.get() * 7, 
     fontWeight: 'bold',
     color: 'black',
-    marginVertical: 20,
+    marginVertical: 10,
     textAlign: 'center',
   },
   list: {
@@ -150,19 +151,19 @@ const styles = StyleSheet.create({
   },
   controlButton: {
     fontSize: PixelRatio.get() * 6, // Other text font size * 5
-    paddingHorizontal: screenWidth * 0.02,
+    paddingHorizontal: 6,
     color: colors.darkgrey,
   },
   quantity: {
     fontSize: PixelRatio.get() * 5, // Title font size * 7
     fontWeight: 'bold',
-    marginHorizontal: screenWidth * 0.02,
+    marginHorizontal: 5,
   },
   checkbox: {
     width: '6%',
     height: 25,
     backgroundColor: colors.primary,
-    borderRadius: screenWidth * 0.03,
+    borderRadius: 5,
     alignItems: 'center',
     justifyContent: 'center',
   },

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Text, Image, StyleSheet, View, TouchableOpacity ,Dimensions,PixelRatio } from 'react-native';
 import colors from '../../constants/colors';
-import { Container } from '@react-email/components';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 

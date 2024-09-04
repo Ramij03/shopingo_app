@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Text, Dimensions, ScrollView, StyleSheet, View, Image, TouchableOpacity,PixelRatio } from 'react-native';
+import { Text, Dimensions, ScrollView, StyleSheet, View, Image, TouchableOpacity,PixelRatio, Linking } from 'react-native';
 import { RouteProp, useRoute, useNavigation } from '@react-navigation/native';
 import { fetchProductById, fetchSimilarProducts } from '../../services/apiService';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -30,7 +30,7 @@ interface Product {
 const ProductDetail: React.FC = () => {
   const route = useRoute<ProductDetailRouteProp>();
   const navigation = useNavigation<ProductDetailNavigationProp>();
-  const { productId } = route.params;
+  const { productId } = route.params ;
 
   const [product, setProduct] = useState<Product | null>(null);
   const [similarProducts, setSimilarProducts] = useState<Product[]>([]);
@@ -86,9 +86,16 @@ const ProductDetail: React.FC = () => {
 
   return (
     <ScrollView style={styles.container}>
-      <Image source={{ uri: product.ImageURL }} style={styles.productImage} />
+        <TouchableOpacity style={styles.backIconContainer}
+        onPress={() => navigation.navigate('BottomTabs')}
+        >
+          <Image source={require('../../assets/icons/Back.png')} style={styles.Icon}/>
+        </TouchableOpacity>
+        <Image source={{ uri: product.ImageURL }} style={styles.productImage} />
+       
       <View style={styles.detailsContainer}>
-        <Text style={styles.productTitle}>{product.Title}</Text>
+     
+        <Text style={styles.productTitle}>{product.Title}</Text> 
         <Text style={styles.productPrice}>${product.Price}</Text>
         {product.Review && <Text style={styles.productReview}>{product.Review}</Text>}
         <Text style={styles.sectionTitle}>Description</Text>
@@ -155,6 +162,9 @@ const ProductDetail: React.FC = () => {
           ))}
         </ScrollView>
       </View>
+      <TouchableOpacity onPress={()=> {Linking.openURL("https://fakestoreapi.com/docs")}}>
+        <Text style={styles.productLink}>Visit Fake Store API for more details</Text>
+        </TouchableOpacity>
       <View style={styles.addtocartcontainer}>
         <TouchableOpacity style={styles.addToCartButton} onPress={handleAddToCart}>
           <Text style={styles.addToCartButtonText}>Add to Cart</Text>
@@ -169,6 +179,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.shadewhite,
+  },
+  backIconContainer: {
+    position: 'absolute',
+    top: screenHeight * 0.02, // Responsive top position
+    left: screenWidth * 0.03, // Responsive right position
+    zIndex: 1,
+  },
+  Icon: {
+    width: 25, 
+    height: 25, 
   },
   loadingContainer: {
     flex: 1,
@@ -300,6 +320,13 @@ const styles = StyleSheet.create({
     fontSize: PixelRatio.get() * 6, // Responsive font size
     fontWeight: 'bold',
     color: colors.white,
+  },
+  productLink: {
+    fontSize: PixelRatio.get() * 5, // Responsive font size
+    fontWeight: 'bold',
+    textDecorationLine: 'underline',
+    color: colors.primary,
+    textAlign:'center'
   },
 });
 

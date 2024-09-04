@@ -17,12 +17,12 @@ import BottomTabs from './src/screens/(tabs)/NavBar';
 import CartPage from './src/screens/(tabs)/CartPage';
 import ProductDetail from './src/screens/(tabs)/ProductDetail';
 import StoryView from './src/screens/components/StoryView';
-import { CartProvider } from './src/screens/components/CartContext';
 import messaging from '@react-native-firebase/messaging';
 import OnBoard from './src/screens/(auth)/OnBoard';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { store, persistor } from './src/screens/store/Store';
+import colors from './src/constants/colors';
 
 type RootStackParamList = {
   Home: undefined;
@@ -68,12 +68,21 @@ function App(): React.JSX.Element {
     requestUserPermission()
     getToken()
   },[])
-
+ const config={
+  screens:{
+    OnBoard:"OB"
+  }
+ }
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
       <GestureHandlerRootView style={{ flex: 1 }}> 
-    <NavigationContainer>
+    <NavigationContainer
+    linking={{
+      prefixes:["shopingo://app"],
+      config
+    }}
+    >
       <Stack.Navigator
         initialRouteName="OnBoard"
         screenOptions={{
@@ -81,12 +90,12 @@ function App(): React.JSX.Element {
           headerTitleStyle: {
             fontSize: 18,
             fontWeight: 'bold',
-            color: '#383B46',
+            color: colors.darkgrey,
             fontFamily: 'SourceSansPro-Semibold',
           },
           headerTransparent: true,
           headerStyle: {
-            backgroundColor: '#FFFFFF',
+            backgroundColor: colors.white,
           },
         }}
       >
@@ -160,9 +169,7 @@ function App(): React.JSX.Element {
         <Stack.Screen
           name="CartPage"
           component={CartPage}
-          options={{
-            title: 'Cart',
-          }}
+          options={{ headerShown: false }}
         />
         <Stack.Screen name="ProductDetail" component={ProductDetail} options={{ headerShown: false }} />
         <Stack.Screen name="StoryView" component={StoryView} options={{ headerShown: false }} />

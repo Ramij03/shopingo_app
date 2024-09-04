@@ -13,5 +13,6 @@ export type RootStackParamList = {
     SearchPage:undefined;
     ProductDetail: { productId: string };
     StoryView:{ storyId: string};
+    CartPage:undefined;
   };
   
