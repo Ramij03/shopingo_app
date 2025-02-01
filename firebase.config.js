@@ -3,8 +3,8 @@ import { getFirestore } from 'firebase/firestore'; // Correct import from 'fireb
 
 const firebaseConfig = {
   apiKey: 'your-API-Key',
-  authDomain: 'shopingo-78ae1.firebaseapp.com',
-  projectId: 'shopingo-78ae1',
+  authDomain: 'firebaseapp.com',
+  projectId: 'id',
 };
 
 const app = initializeApp(firebaseConfig);
